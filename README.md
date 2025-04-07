@@ -2,7 +2,7 @@
 
 ## 🧠 Introduction
 **ExtremeFusion** is an advanced smart monitoring system that integrates real-time human posture estimation, heart rate detection, and environmental sound monitoring.  
-By combining **YOLOv8**, **LSTM neural networks**, **ESP32**, and sensors like **MX30105** and **MP34DT05**, this project achieves powerful and real-time multi-modal detection and analysis.
+This project achieves powerful and real-time multi-modal detection and analysis by combining **YOLOv8**, **LSTM neural networks**, **ESP32**, and sensors like **MX30105** and **MP34DT05**.
 
 ## 🚀 Features
 - **Real-Time Pose Estimation** using YOLOv8
@@ -59,14 +59,14 @@ Run the main program:
 python main.py
 ```
 
-**Controls:**
+**Controls**
 - Press `q` to quit the video display.
 
-**Output:**
+**Output**
 - Real-time pose and behavior detection
 - Heart rate and sound level monitoring
 - Logging results to `detection_log.txt`
-- Error frames saved automatically if processing fails
+- Error frames are saved automatically if processing fails
 
 ## 📈 Performance
 - Real-time detection at **~28-30 FPS** (depending on hardware)
@@ -81,4 +81,4 @@ python main.py
 Feel free to open an issue or pull request if you find bugs or have suggestions!
 
 ## 📜 License
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
