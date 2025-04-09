@@ -1,8 +1,8 @@
 # ExtremeFusion-YOLO-LSTM-AIoT
 
 ## 🧠 Introduction
-**ExtremeFusion** is an advanced smart monitoring system that integrates real-time human posture estimation, heart rate detection, and environmental sound monitoring.  
-This project achieves robust and real-time multi-modal detection and analysis by combining **YOLOv8**, **LSTM neural networks**, **ESP32**, and sensors like **MX30105** and **MP34DT05**.
+**ExtremeFusion** is an advanced intelligent monitoring system that integrates real-time human posture estimation, heart rate detection, and environmental sound monitoring.  
+This project achieves robust and real-time multi-modal detection and analysis by combining **YOLO**, **LSTM neural networks**, **ESP32**, and sensors like **MX30105** and **MP34DT05**.
 
 ## 🚀 Features
 - **Real-Time Pose Estimation** using YOLOv8, If you want a newer version, please replace the *.pt file.
@@ -27,7 +27,7 @@ This project achieves robust and real-time multi-modal detection and analysis by
 
 ## 🖼️ System Architecture
 ```
-[ESP32 + Sensors] → [Serial Communication] → [YOLOv8 Pose Detection] → [LSTM Behavior Prediction]
+[ESP32 + Sensors] → [Serial Communication] → [YOLO Pose Detection] → [LSTM Behavior Prediction]
         ↓                                                ↓
   [Heart Rate / Sound Data]                       [Real-Time Monitoring & Logging]
         ↓                                                ↓
@@ -41,17 +41,12 @@ This project achieves robust and real-time multi-modal detection and analysis by
    cd ExtremeFusion-YOLO-LSTM-AIoT
    ```
 
-2. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Make sure the following models are available:
+   - `yolov8n-pose.pt` (Higher versions or self-trained models can be used for pose estimation.)
+   - `best.pt` (for object detection)
+   - `LSTM_Model.pth` (for behavior prediction)
 
-3. Make sure the following models are available:
-   - `yolov8n-pose.pt` (for pose estimation)
-   - `best16.pt` (for object detection)
-   - `LSTM_Model3.pth` (for behavior prediction)
-
-4. Connect your ESP32 device with MX30105 and MP34DT05 sensors.
+3. Connect your ESP32 device with MX30105 and MP34DT05 sensors.
 
 ## 🏃 Usage
 Run the main program:
