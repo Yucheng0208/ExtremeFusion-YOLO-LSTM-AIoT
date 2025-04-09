@@ -18,7 +18,7 @@ logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
 
 # Configuration
 VIDEO_PATH = "0"
-POSE_MODEL_PATH = 'yolov8n-pose.pt'
+POSE_MODEL_PATH = 'yolov-pose.pt'
 OBJECT_MODEL_PATH = 'best.pt'
 LSTM_MODEL_PATH = "LSTM_Model.pth"
 FRAME_INTERVAL = 300
