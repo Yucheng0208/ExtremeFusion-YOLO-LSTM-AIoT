@@ -6,6 +6,7 @@ authors:
   orcid: "https://orcid.org/0000-0003-1301-9192"
 
 title: "ExtremeFusion-YOLO-LSTM-AIoT"
+license: MIT
 version: 1.0.0
 date-released: 2025-04-08
 url: "https://github.com/Yucheng0208/ExtremeFusion-YOLO-LSTM-AIoT"
