@@ -1,3 +1,4 @@
+import socket
 import serial
 import time
 import threading
@@ -16,14 +17,15 @@ from lstm import LSTM_Model
 logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
 
 # Configuration
-SERIAL_PORT = 'COM3'
-BAUD_RATE = 115200
 VIDEO_PATH = "0"
 POSE_MODEL_PATH = 'yolov8n-pose.pt'
 OBJECT_MODEL_PATH = 'best.pt'
 LSTM_MODEL_PATH = "LSTM_Model.pth"
 FRAME_INTERVAL = 300
 CONFIDENCE_THRESHOLD = 0.7
+
+SERVER_IP = '0.0.0.0'
+SERVER_PORT = 12345
 
 # Shared variables
 heart_rate = 0
@@ -53,21 +55,41 @@ def print_status():
         except queue.Empty:
             continue
 
-# Serial reading thread
-def read_serial_data(ser):
+# TCP Server to receive data
+def start_tcp_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind((SERVER_IP, SERVER_PORT))
+    server_socket.listen(1)
+    print(f"Listening for incoming TCP connection on {SERVER_IP}:{SERVER_PORT}...")
+
+    client_socket, addr = server_socket.accept()
+    print(f"Connection from {addr}")
+
+    return client_socket
+
+# Read TCP Data
+def read_tcp_data(sock):
     global heart_rate, volume
+    buffer = ""
     while not stop_event.is_set():
-        if ser.in_waiting > 0:
-            try:
-                data = ser.readline().decode('utf-8').strip()
-                parts = data.split(',')
+        try:
+            data = sock.recv(1024)
+            if not data:
+                break  # Client disconnected
+
+            buffer += data.decode('utf-8')
+
+            while '\n' in buffer:
+                line, buffer = buffer.split('\n', 1)
+                parts = line.strip().split(',')
                 if len(parts) == 2:
                     heart_rate = float(parts[0].strip())
                     volume = int(parts[1].strip())
                 else:
-                    output_queue.put(f"Error: Incorrect data format received: {data}")
-            except ValueError:
-                output_queue.put("Error: Invalid number format")
+                    output_queue.put(f"Error: Incorrect data format received: {line}")
+        except Exception as e:
+            output_queue.put(f"TCP read error: {e}")
+            break
 
 # Frame processing function
 def process_frame(frame, pose_model, object_model, lstm_model):
@@ -143,7 +165,9 @@ def process_frame(frame, pose_model, object_model, lstm_model):
 
 # Main program
 if __name__ == "__main__":
-    with closing(serial.Serial(SERIAL_PORT, BAUD_RATE)) as ser, closing(cv2.VideoCapture(VIDEO_PATH)) as cap:
+    tcp_socket = start_tcp_server()
+
+    with closing(cv2.VideoCapture(VIDEO_PATH)) as cap:
         pose_model = YOLO(POSE_MODEL_PATH)
         object_model = YOLO(OBJECT_MODEL_PATH)
         lstm_model = LSTM_Model()
@@ -153,7 +177,7 @@ if __name__ == "__main__":
         lstm_model.eval()
 
         threading.Thread(target=print_status, daemon=True).start()
-        threading.Thread(target=read_serial_data, args=(ser,), daemon=True).start()
+        threading.Thread(target=read_tcp_data, args=(tcp_socket,), daemon=True).start()
 
         frame_count = 0
         counter = 0
