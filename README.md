@@ -2,7 +2,7 @@
 
 ## 🧠 Introduction
 **ExtremeFusion** is an advanced intelligent monitoring system that integrates real-time human posture estimation, heart rate detection, and environmental sound monitoring.  
-This project achieves robust and real-time multi-modal detection and analysis by combining **YOLO**, **LSTM neural networks**, **ESP32**, and sensors like **MX30105** and **MP34DT05**.
+This project achieves robust and real-time multi-modal detection and analysis by combining **YOLO**, **LSTM neural networks**, **ESP32**, and sensors like **MAX30105** and **MP34DT05**.
 
 ## 🚀 Features
 - **Real-Time Pose Estimation** using YOLOv8, If you want a newer version, please replace the *.pt file.
@@ -18,7 +18,7 @@ This project achieves robust and real-time multi-modal detection and analysis by
 | YOLO | Real-time human pose and object detection |
 | LSTM | Time-series human behavior prediction |
 | ESP32 | IoT device for sensor data acquisition |
-| MX30105 | Heart rate and oxygen sensor |
+| MAX30105 | Heart rate and oxygen sensor |
 | MP34DT05 | Digital microphone for sound detection |
 | Wi-Fi | Real-time data communication |
 | PyTorch | Deep learning framework |
@@ -46,7 +46,7 @@ This project achieves robust and real-time multi-modal detection and analysis by
    - `best.pt` (for object detection)
    - `LSTM_Model.pth` (for behavior prediction)
 
-3. Connect your ESP32 device with MX30105 and MP34DT05 sensors.
+3. Connect your ESP32 device with MAX30105 and MP34DT05 sensors.
 
 ## 🏃 Usage
 Run the main program:
